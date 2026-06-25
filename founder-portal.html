@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GCGO Founder Portal — GoGo Mode</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@200;300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #020810;
+      --bg2: #040f1e;
+      --bg3: #061428;
+      --green: #00d68f;
+      --teal: #00e5b0;
+      --gold: #ffc947;
+      --red: #ff4757;
+      --blue: #00b4d8;
+      --white: #e8f4f8;
+      --muted: #4a6475;
+      --border: rgba(0,214,143,0.12);
+      --glow: 0 0 20px rgba(0,214,143,0.2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body { background: var(--bg); color: var(--white); font-family: 'Exo 2', sans-serif; font-weight: 300; display: flex; flex-direction: column; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 56px; flex-shrink: 0;
+      background: rgba(4,15,30,0.98);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-logo { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--green); letter-spacing: 0.1em; }
+    .topbar-logo span { color: var(--white); }
+    .topbar-right { display: flex; align-items: center; gap: 20px; }
+    .topbar-time { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--muted); }
+    .topbar-status { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--green); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ── TAB BAR ── */
+    .tabbar {
+      display: flex; flex-shrink: 0;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      flex: 1; padding: 14px 8px;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-align: center; cursor: pointer; color: var(--muted);
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+    }
+    .tab .tab-icon { font-size: 1rem; }
+    .tab:hover { color: var(--white); background: rgba(255,255,255,0.02); }
+    .tab.active { color: var(--green); border-bottom-color: var(--green); background: rgba(0,214,143,0.04); }
+    .tab.gogo.active { color: var(--gold); border-bottom-color: var(--gold); background: rgba(255,201,71,0.04); }
+    .tab.demo.active { color: var(--blue); border-bottom-color: var(--blue); background: rgba(0,180,216,0.04); }
+
+    /* ── CONTENT AREA ── */
+    .content { flex: 1; overflow-y: auto; }
+    .screen { display: none; padding: 24px; min-height: 100%; }
+    .screen.active { display: block; }
+
+    /* ── SHARED COMPONENTS ── */
+    .screen-header { margin-bottom: 24px; }
+    .screen-label { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 6px; }
+    .screen-title { font-family: 'Rajdhani', sans-serif; font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
+    .screen-sub { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .kpi { background: var(--bg2); border: 1px solid var(--border); padding: 16px; }
+    .kpi-val { font-family: 'Rajdhani', sans-serif; font-size: 1.8rem; font-weight: 700; line-height: 1; }
+    .kpi-label { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+    .kpi-delta { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; margin-top: 6px; }
+    .up { color: var(--green); }
+    .down { color: var(--red); }
+
+    .section-block { background: var(--bg2); border: 1px solid var(--border); margin-bottom: 16px; }
+    .block-header { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .block-title { font-family: 'Rajdhani', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .block-body { padding: 18px; }
+
+    /* TABLES */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .data-table th { padding: 8px 12px; font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--border); text-align: left; }
+    .data-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.03); color: rgba(232,244,248,0.8); vertical-align: middle; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(0,214,143,0.03); }
+
+    .badge { display: inline-block; padding: 2px 8px; font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .badge-green { background: rgba(0,214,143,0.15); color: var(--green); border: 1px solid rgba(0,214,143,0.3); }
+    .badge-gold { background: rgba(255,201,71,0.12); color: var(--gold); border: 1px solid rgba(255,201,71,0.3); }
+    .badge-red { background: rgba(255,71,87,0.12); color: var(--red); border: 1px solid rgba(255,71,87,0.3); }
+    .badge-blue { background: rgba(0,180,216,0.12); color: var(--blue); border: 1px solid rgba(0,180,216,0.3); }
+    .badge-muted { background: rgba(74,100,117,0.2); color: var(--muted); border: 1px solid rgba(74,100,117,0.3); }
+
+    /* FORMS (add lead) */
+    .add-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .add-form.three { grid-template-columns: 1fr 1fr 1fr; }
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; }
+    .field input, .field select, .field textarea {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(0,214,143,0.15);
+      color: var(--white); padding: 8px 10px; font-family: 'Exo 2', sans-serif;
+      font-size: 0.82rem; outline: none; transition: border-color 0.2s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--green); }
+    .field select { appearance: none; }
+    .add-btn { grid-column: 1 / -1; background: var(--green); color: var(--bg); border: none; padding: 10px; font-family: 'Rajdhani', sans-serif; font-size: 0.88rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: box-shadow 0.2s; }
+    .add-btn:hover { box-shadow: var(--glow); }
+
+    /* DEMO MODE BANNER */
+    .demo-banner { background: rgba(0,180,216,0.08); border: 1px solid rgba(0,180,216,0.25); padding: 12px 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .demo-banner-icon { font-size: 1.2rem; }
+    .demo-banner-text { font-size: 0.82rem; color: rgba(0,180,216,0.9); line-height: 1.5; }
+    .demo-banner-text strong { font-weight: 700; }
+
+    /* GOGO BADGE */
+    .gogo-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,201,71,0.1); border: 1px solid rgba(255,201,71,0.3); padding: 4px 10px; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 16px; }
+
+    /* ALERTS */
+    .alert { padding: 12px 16px; margin-bottom: 12px; display: flex; gap: 12px; align-items: flex-start; }
+    .alert-green { background: rgba(0,214,143,0.08); border-left: 3px solid var(--green); }
+    .alert-gold { background: rgba(255,201,71,0.08); border-left: 3px solid var(--gold); }
+    .alert-red { background: rgba(255,71,87,0.08); border-left: 3px solid var(--red); }
+    .alert-icon { font-size: 0.9rem; padding-top: 1px; }
+    .alert-text { font-size: 0.8rem; color: rgba(232,244,248,0.8); line-height: 1.5; }
+    .alert-text strong { color: var(--white); font-weight: 600; }
+
+    @media (max-width: 600px) {
+      .add-form, .add-form.three { grid-template-columns: 1fr; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .tab .tab-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-logo">GCGO <span>Founder Portal</span></div>
+    <div class="topbar-right">
+      <span class="topbar-time" id="clock">--:-- --</span>
+      <span class="topbar-status"><span class="dot"></span> LIVE</span>
+    </div>
+  </div>
+
+  <!-- TAB BAR -->
+  <div class="tabbar">
+    <div class="tab gogo active" onclick="switchTab('gogo')">
+      <span class="tab-icon">⚡</span>
+      <span class="tab-label">GoGo Mode</span>
+    </div>
+    <div class="tab" onclick="switchTab('healthcare')">
+      <span class="tab-icon">🏥</span>
+      <span class="tab-label">Healthcare</span>
+    </div>
+    <div class="tab" onclick="switchTab('healthlife')">
+      <span class="tab-icon">🛡️</span>
+      <span class="tab-label">Health &amp; Life</span>
+    </div>
+    <div class="tab demo" onclick="switchTab('demo')">
+      <span class="tab-icon">🎓</span>
+      <span class="tab-label">Demo / Training</span>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- SCREEN 1: GOGO MODE (God Mode Overview)   -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen active" id="screen-gogo">
+      <div class="screen-header">
+        <div class="screen-label" style="color:var(--gold);">Founder Command Center</div>
+        <div class="screen-title">GoGo Mode <span style="color:var(--gold);">⚡</span></div>
+        <div class="screen-sub">Real-time overview of all GCGO operations — both divisions combined.</div>
+      </div>
+
+      <div class="gogo-badge">⚡ GOD MODE — FULL VISIBILITY</div>
+
+      <!-- COMBINED KPIs -->
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--gold);" id="total-leads">0</div>
+          <div class="kpi-label">Total Leads (All)</div>
+          <div class="kpi-delta up">↑ Both divisions</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--green);" id="hc-leads-kpi">0</div>
+          <div class="kpi-label">Healthcare Leads</div>
+          <div class="kpi-delta up">↑ Consulting</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--teal);" id="hl-leads-kpi">0</div>
+          <div class="kpi-label">H&amp;L Leads</div>
+          <div class="kpi-delta up">↑ Insurance</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--gold);">$0</div>
+          <div class="kpi-label">Revenue MTD</div>
+          <div class="kpi-delta" style="color:var(--muted);">Connect Stripe</div>
+        </div>
+      </div>
+
+      <!-- SYSTEM ALERTS -->
+      <div class="section-block">
+        <div class="block-header">
+          <span class="block-title">System Alerts</span>
+          <span class="badge badge-gold">3 Active</span>
+        </div>
+        <div class="block-body" style="padding:12px 18px;">
+          <div class="alert alert-gold">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-text"><strong>Google Workspace</strong> — Reactivate hello@gohealthcareco.com at admin.google.com ($6/mo)</div>
+          </div>
+          <div class="alert alert-gold">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-text"><strong>Supabase</strong> — Connect anon key to activate live lead capture on both forms</div>
+          </div>
+          <div class="alert alert-green">
+            <span class="alert-icon">✓</span>
+            <div class="alert-text"><strong>Domain</strong> — gohealthcareco.com registered and DNS configured</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALL LEADS COMBINED -->
+      <div class="section-block">
+        <div class="block-header">
+          <span class="block-title">All Leads — Both Divisions</span>
+          <span class="badge badge-green" id="all-leads-count">0 leads</span>
+        </div>
+        <div class="block-body" style="padding:0;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Division</th>
+                <th>Service / Interest</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="all-leads-body">
+              <tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px;">No leads yet — add from Healthcare or Health &amp; Life tabs</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- SCREEN 2: GCGO HEALTHCARE CONSULTING      -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-healthcare">
+      <div class="screen-header">
+        <div class="screen-label" style="color:var(--green);">Division 1</div>
+        <div class="screen-title">GCGO Healthcare Consulting</div>
+        <div class="screen-sub">Medical billing, credentialing, HIPAA, virtual RN, EMR, RPM, lab/DOT, and paramedical services.</div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--green);" id="hc-total">0</div>
+          <div class="kpi-label">Total Leads</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--teal);" id="hc-new">0</div>
+          <div class="kpi-label">New This Week</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--gold);" id="hc-active">0</div>
+          <div class="kpi-label">Active Clients</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--red);" id="hc-followup">0</div>
+          <div class="kpi-label">Need Follow-up</div>
+        </div>
+      </div>
+
+      <!-- ADD HEALTHCARE LEAD -->
+      <div class="section-block">
+        <div class="block-header">
+          <span class="block-title">Add Healthcare Lead</span>
+          <span class="badge badge-green">Quick Add</span>
+        </div>
+        <div class="block-body">
+          <div class="add-form three" id="hc-add-form">
+            <div class="field">
+              <label>First Name</label>
+              <input type="text" id="hc-first" placeholder="Jane" />
+            </div>
+            <div class="field">
+              <label>Last Name</label>
+              <input type="text" id="hc-last" placeholder="Smith" />
+            </div>
+            <div class="field">
+              <label>Phone</label>
+              <input type="tel" id="hc-phone" placeholder="(305) 555-0100" />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="email" id="hc-email" placeholder="jane@practice.com" />
+            </div>
+            <div class="field">
+              <label>Practice Name</label>
+              <input type="text" id="hc-practice" placeholder="Smith Family Medicine" />
+            </div>
+            <div class="field">
+              <label>Service Needed</label>
+              <select id="hc-service">
+                <option value="">Select...</option>
+                <option>Medical Billing / RCM</option>
+                <option>Credentialing</option>
+                <option>HIPAA Compliance</option>
+                <option>Virtual RN</option>
+                <option>EMR Implementation</option>
+                <option>Remote Patient Monitoring</option>
+                <option>Lab / DOT Testing</option>
+                <option>Paramedical Exams</option>
+                <option>Full Practice Audit</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>City / State</label>
+              <input type="text" id="hc-city" placeholder="Miami, FL" />
+            </div>
+            <div class="field">
+              <label>Lead Status</label>
+              <select id="hc-status">
+                <option value="New">New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Qualified">Qualified</option>
+                <option value="Proposal Sent">Proposal Sent</option>
+                <option value="Active Client">Active Client</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Notes</label>
+              <input type="text" id="hc-notes" placeholder="Any notes..." />
+            </div>
+            <button class="add-btn" onclick="addHCLead()">+ Add Healthcare Lead</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- HEALTHCARE LEADS TABLE -->
+      <div class="section-block">
+        <div class="block-header">
+          <span class="block-title">Healthcare Leads & Clients</span>
+          <span class="badge badge-green" id="hc-count-badge">0 records</span>
+        </div>
+        <div class="block-body" style="padding:0;overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Practice</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Service</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Added</th>
+              </tr>
+            </thead>
+            <tbody id="hc-leads-body">
+              <tr><td colspan="9" style="text-align:center;color:var(--muted);padding:24px;">No healthcare leads yet — add one above</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- SCREEN 3: GCGO HEALTH & LIFE              -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-healthlife">
+      <div class="screen-header">
+        <div class="screen-label" style="color:var(--teal);">Division 2</div>
+        <div class="screen-title">GCGO Health &amp; Life</div>
+        <div class="screen-sub">Medicare, ACA, New Era, dental, vision, hearing, life insurance, and debt relief leads.</div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--teal);" id="hl-total">0</div>
+          <div class="kpi-label">Total Leads</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--green);" id="hl-medicare">0</div>
+          <div class="kpi-label">Medicare</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--gold);" id="hl-life">0</div>
+          <div class="kpi-label">Life Insurance</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val" style="color:var(--blue);" id="hl-aca">0</div>
+          <div class="kpi-label">ACA / Non-ACA</div>
+        </div>
+      </div>
+
+      <!-- ADD H&L LEAD -->
+      <div class="section-block">
+        <div class="block-header">
+          <span class="block-title">Add Health &amp; Life Lead</span>
+          <span class="badge badge-blue">Quick Add</span>
+        </div>
+        <div class="block-body">
+          <div class="add-form three">
+            <div class="field">
+              <label>First Name</label>
+              <input type="text" id="hl-first" placeholder="Jane" />
+            </div>
+            <div class="field">
+              <label>Last Name</label>
+              <input type="text" id="hl-last" placeholder="Smith" />
+            </div>
+            <div class="field">
+              <label>Phone</label>
+              <input type="tel" id="hl-phone" placeholder="(305) 555-0100" />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="email" id="hl-email" placeholder="jane@email.com" />
+            </div>
+            <div class="field">
+              <label>Date of Birth</label>
+              <input type="date" id="hl-dob" />
+            </div>
+            <div class="field">
+              <label>State</label>
+              <select id="hl-state">
+                <option value="">Select...</option>
+                <option>Florida</option><option>Texas</option><option>Georgia</option>
+                <option>Illinois</option><option>New York</option><option>California</option>
+                <option>Arizona</option><option>Washington</option><option>Colorado</option><option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Product / Coverage Type</label>
+              <select id="hl-product">
+                <option value="">Select...</option>
+                <option>Medicare Advantage</option>
+                <option>Medicare Supplement (Medigap)</option>
+                <option>Medicare Part D</option>
+                <option>ACA / Marketplace Plan</option>
+                <option>Non-ACA / New Era Life Plan</option>
+                <option>Dental — Western Dental / Other</option>
+                <option>Vision — VSP / Other</option>
+                <option>Hearing Aid Coverage</option>
+                <option>Life Insurance — PHP / Aetna</option>
+                <option>Term Life</option>
+                <option>Whole Life / Final Expense</option>
+                <option>Debt Relief / Bamboo PHP</option>
+                <option>Health Screening / Testing</option>
+                <option>Multiple Products</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Carrier (if known)</label>
+              <select id="hl-carrier">
+                <option value="">Unknown / TBD</option>
+                <option>PHP Agency</option>
+                <option>Aetna</option>
+                <option>Blue Cross Blue Shield</option>
+                <option>Blue Shield of California</option>
+                <option>Anthem</option>
+                <option>Kaiser Permanente</option>
+                <option>New Era Life</option>
+                <option>VSP</option>
+                <option>Western Dental</option>
+                <option>Bamboo PHP</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Lead Status</label>
+              <select id="hl-status">
+                <option value="New">New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Quoted">Quoted</option>
+                <option value="App Submitted">App Submitted</option>
+                <option value="Enrolled">Enrolled</option>
+                <option value="Closed / Lost">Closed / Lost</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Notes</label>
+              <input type="text" id="hl-notes" placeholder="Budget, current plan, specific needs..." />
+            </div>
+            <button class="add-btn" style="background:var(--teal);" onclick="addHLLead()">+ Add Health &amp; Life Lead</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- H&L LEADS TABLE -->
+      <div class="section-block">
+        <div class="block-header">
+          <span class="block-title">Health &amp; Life Leads</span>
+          <span class="badge badge-blue" id="hl-count-badge">0 records</span>
+        </div>
+        <div class="block-body" style="padding:0;overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>DOB</th>
+                <th>State</th>
+                <th>Product</th>
+                <th>Carrier</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Added</th>
+              </tr>
+            </thead>
+            <tbody id="hl-leads-body">
+              <tr><td colspan="10" style="text-align:center;color:var(--muted);padding:24px;">No Health &amp; Life leads yet — add one above</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- SCREEN 4: DEMO / TRAINING MODE            -->
+    <!-- ══════════════════════════════════════════ -->
+    <div class="screen" id="screen-demo">
+      <div class="screen-header">
+        <div class="screen-label" style="color:var(--blue);">Training Environment</div>
+        <div class="screen-title">Demo &amp; Training Mode <span style="color:var(--blue);">🎓</span></div>
+        <div class="screen-sub">Use this screen to train staff, walk clients through the system, or demo how GCGO works. No real data is affected.</div>
+      </div>
+
+      <div class="demo-banner">
+        <span class="demo-banner-icon">🎓</span>
+        <div class="demo-banner-text"><strong>DEMO MODE ACTIVE</strong> — All entries here are sample/training data only. Nothing entered on this screen affects your live leads, clients, or reports. Safe to use for onboarding, demos, and training.</div>
+      </div>
+
+      <!-- DEMO SELECTOR -->
+      <div class="section-block">
+        <div class="block-header">
+          <span class="block-title">Select Demo Scenario</span>
+        </div>
+        <div class="block-body">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+            <button onclick="loadDemo('hc')" style="background:rgba(0,214,143,0.1);border:1px solid var(--green);color:var(--green);padding:10px 20px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">🏥 Healthcare Consulting Demo</button>
+            <button onclick="loadDemo('hl')" style="background:rgba(0,229,176,0.1);border:1px solid var(--teal);color:var(--teal);padding:10px 20px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">🛡️ Health &amp; Life Demo</button>
+            <button onclick="loadDemo('full')" style="background:rgba(255,201,71,0.1);border:1px solid var(--gold);color:var(--gold);padding:10px 20px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">⚡ Full Platform Demo</button>
+            <button onclick="clearDemo()" style="background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.3);color:var(--red);padding:10px 20px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">✕ Clear Demo Data</button>
+          </div>
+          <div id="demo-description" style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Select a demo scenario above to load sample data and walk through the platform with a client or new team member.</div>
+        </div>
+      </div>
+
+      <!-- DEMO DATA DISPLAY -->
+      <div class="section-block" id="demo-data-block" style="display:none;">
+        <div class="block-header">
+          <span class="block-title" id="demo-table-title">Demo Data</span>
+          <span class="badge badge-blue">DEMO ONLY</span>
+        </div>
+        <div class="block-body" style="padding:0;overflow-x:auto;">
+          <table class="data-table" id="demo-table">
+            <thead id="demo-thead"></thead>
+            <tbody id="demo-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TRAINING SCRIPTS -->
+      <div class="section-block">
+        <div class="block-header">
+          <span class="block-title">Training Scripts</span>
+        </div>
+        <div class="block-body" style="display:flex;flex-direction:column;gap:14px;">
+          <div style="background:rgba(0,214,143,0.05);border:1px solid rgba(0,214,143,0.1);padding:14px;">
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin-bottom:6px;color:var(--green);">Script 1 — Onboarding a New Healthcare Client</div>
+            <div style="font-size:0.8rem;color:var(--muted);line-height:1.7;">"Welcome to GCGO! Today I'll walk you through your client portal where you can track your claims, check compliance status, message our team, and view your billing reports in real time. Let me show you how to add a new claim..."</div>
+          </div>
+          <div style="background:rgba(0,229,176,0.05);border:1px solid rgba(0,229,176,0.1);padding:14px;">
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin-bottom:6px;color:var(--teal);">Script 2 — Medicare Enrollment Walkthrough</div>
+            <div style="font-size:0.8rem;color:var(--muted);line-height:1.7;">"Let's find you the right Medicare plan. First, I'll need your date of birth and zip code to see what's available in your area. Medicare Advantage plans cover hospital and medical, and many include dental, vision, and hearing at no extra premium..."</div>
+          </div>
+          <div style="background:rgba(0,180,216,0.05);border:1px solid rgba(0,180,216,0.1);padding:14px;">
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin-bottom:6px;color:var(--blue);">Script 3 — Life Insurance Needs Analysis</div>
+            <div style="font-size:0.8rem;color:var(--muted);line-height:1.7;">"To find the right life insurance coverage for your family, let's start with a simple needs analysis. How many dependents do you have? Do you have any existing policies? What's your primary goal — income replacement, final expenses, or leaving a legacy..."</div>
+          </div>
+          <div style="background:rgba(255,201,71,0.05);border:1px solid rgba(255,201,71,0.1);padding:14px;">
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;margin-bottom:6px;color:var(--gold);">Script 4 — New Team Member Platform Tour</div>
+            <div style="font-size:0.8rem;color:var(--muted);line-height:1.7;">"Welcome to GCGO! The Founder Portal has four screens. GoGo Mode shows everything across both divisions. The Healthcare tab is where you manage consulting clients. Health &amp; Life is for insurance leads. And this Demo/Training screen is where you practice before going live..."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end .content -->
+
+  <script>
+    // ── CLOCK ──
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    }
+    setInterval(updateClock, 1000); updateClock();
+
+    // ── TAB SWITCHING ──
+    function switchTab(name) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelector(`[onclick="switchTab('${name}')"]`).classList.add('active');
+      document.getElementById('screen-' + name).classList.add('active');
+    }
+
+    // ── DATA STORES ──
+    let hcLeads = [];
+    let hlLeads = [];
+
+    // ── STATUS BADGE ──
+    function statusBadge(s) {
+      const map = {
+        'New':'badge-gold','Contacted':'badge-blue','Qualified':'badge-blue',
+        'Proposal Sent':'badge-gold','Active Client':'badge-green','Enrolled':'badge-green',
+        'App Submitted':'badge-blue','Quoted':'badge-gold','Closed':'badge-muted','Closed / Lost':'badge-muted'
+      };
+      return `<span class="badge ${map[s]||'badge-muted'}">${s}</span>`;
+    }
+
+    function today() {
+      return new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    }
+
+    // ── ADD HEALTHCARE LEAD ──
+    function addHCLead() {
+      const first = document.getElementById('hc-first').value.trim();
+      const last = document.getElementById('hc-last').value.trim();
+      const phone = document.getElementById('hc-phone').value.trim();
+      const email = document.getElementById('hc-email').value.trim();
+      if (!first || !last || !phone) { alert('First name, last name, and phone are required.'); return; }
+
+      const lead = {
+        name: `${first} ${last}`,
+        practice: document.getElementById('hc-practice').value || '—',
+        phone, email: email || '—',
+        service: document.getElementById('hc-service').value || '—',
+        city: document.getElementById('hc-city').value || '—',
+        status: document.getElementById('hc-status').value,
+        notes: document.getElementById('hc-notes').value || '—',
+        date: today()
+      };
+
+      hcLeads.unshift(lead);
+      renderHCTable();
+      renderGoGoTable();
+      updateKPIs();
+
+      // Clear form
+      ['hc-first','hc-last','hc-phone','hc-email','hc-practice','hc-city','hc-notes'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('hc-service').value = '';
+      document.getElementById('hc-status').value = 'New';
+    }
+
+    function renderHCTable() {
+      const body = document.getElementById('hc-leads-body');
+      if (hcLeads.length === 0) {
+        body.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--muted);padding:24px;">No healthcare leads yet</td></tr>';
+        document.getElementById('hc-count-badge').textContent = '0 records';
+        return;
+      }
+      document.getElementById('hc-count-badge').textContent = `${hcLeads.length} record${hcLeads.length!==1?'s':''}`;
+      body.innerHTML = hcLeads.map(l => `
+        <tr>
+          <td style="font-weight:600;">${l.name}</td>
+          <td>${l.practice}</td>
+          <td>${l.phone}</td>
+          <td>${l.email}</td>
+          <td>${l.service}</td>
+          <td>${l.city}</td>
+          <td>${statusBadge(l.status)}</td>
+          <td style="color:var(--muted);font-size:0.75rem;">${l.notes}</td>
+          <td style="color:var(--muted);font-size:0.75rem;">${l.date}</td>
+        </tr>`).join('');
+    }
+
+    // ── ADD HEALTH & LIFE LEAD ──
+    function addHLLead() {
+      const first = document.getElementById('hl-first').value.trim();
+      const last = document.getElementById('hl-last').value.trim();
+      const phone = document.getElementById('hl-phone').value.trim();
+      const email = document.getElementById('hl-email').value.trim();
+      if (!first || !last || !phone) { alert('First name, last name, and phone are required.'); return; }
+
+      const lead = {
+        name: `${first} ${last}`,
+        phone, email: email || '—',
+        dob: document.getElementById('hl-dob').value || '—',
+        state: document.getElementById('hl-state').value || '—',
+        product: document.getElementById('hl-product').value || '—',
+        carrier: document.getElementById('hl-carrier').value || 'TBD',
+        status: document.getElementById('hl-status').value,
+        notes: document.getElementById('hl-notes').value || '—',
+        date: today()
+      };
+
+      hlLeads.unshift(lead);
+      renderHLTable();
+      renderGoGoTable();
+      updateKPIs();
+
+      ['hl-first','hl-last','hl-phone','hl-email','hl-dob','hl-notes'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('hl-product').value = '';
+      document.getElementById('hl-carrier').value = '';
+      document.getElementById('hl-state').value = '';
+      document.getElementById('hl-status').value = 'New';
+    }
+
+    function renderHLTable() {
+      const body = document.getElementById('hl-leads-body');
+      if (hlLeads.length === 0) {
+        body.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--muted);padding:24px;">No Health &amp; Life leads yet</td></tr>';
+        document.getElementById('hl-count-badge').textContent = '0 records';
+        return;
+      }
+      document.getElementById('hl-count-badge').textContent = `${hlLeads.length} record${hlLeads.length!==1?'s':''}`;
+      body.innerHTML = hlLeads.map(l => `
+        <tr>
+          <td style="font-weight:600;">${l.name}</td>
+          <td>${l.phone}</td>
+          <td>${l.email}</td>
+          <td>${l.dob}</td>
+          <td>${l.state}</td>
+          <td>${l.product}</td>
+          <td>${l.carrier}</td>
+          <td>${statusBadge(l.status)}</td>
+          <td style="color:var(--muted);font-size:0.75rem;">${l.notes}</td>
+          <td style="color:var(--muted);font-size:0.75rem;">${l.date}</td>
+        </tr>`).join('');
+    }
+
+    // ── GOGO ALL LEADS TABLE ──
+    function renderGoGoTable() {
+      const all = [
+        ...hcLeads.map(l => ({...l, division:'Healthcare', interest: l.service})),
+        ...hlLeads.map(l => ({...l, division:'Health & Life', interest: l.product}))
+      ].sort((a,b) => b.date - a.date);
+
+      const body = document.getElementById('all-leads-body');
+      document.getElementById('all-leads-count').textContent = `${all.length} lead${all.length!==1?'s':''}`;
+
+      if (all.length === 0) {
+        body.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px;">No leads yet — add from Healthcare or Health &amp; Life tabs</td></tr>';
+        return;
+      }
+
+      body.innerHTML = all.map(l => `
+        <tr>
+          <td style="font-weight:600;">${l.name}</td>
+          <td>${l.phone}</td>
+          <td>${l.email||'—'}</td>
+          <td><span class="badge ${l.division==='Healthcare'?'badge-green':'badge-blue'}">${l.division}</span></td>
+          <td>${l.interest||'—'}</td>
+          <td>${statusBadge(l.status)}</td>
+          <td style="color:var(--muted);font-size:0.75rem;">${l.date}</td>
+        </tr>`).join('');
+    }
+
+    // ── KPIs ──
+    function updateKPIs() {
+      const hcTotal = hcLeads.length;
+      const hlTotal = hlLeads.length;
+      document.getElementById('total-leads').textContent = hcTotal + hlTotal;
+      document.getElementById('hc-leads-kpi').textContent = hcTotal;
+      document.getElementById('hl-leads-kpi').textContent = hlTotal;
+      document.getElementById('hc-total').textContent = hcTotal;
+      document.getElementById('hl-total').textContent = hlTotal;
+      document.getElementById('hc-active').textContent = hcLeads.filter(l=>l.status==='Active Client').length;
+      document.getElementById('hc-followup').textContent = hcLeads.filter(l=>l.status==='Contacted'||l.status==='Qualified').length;
+      const thisWeek = new Date(); thisWeek.setDate(thisWeek.getDate()-7);
+      document.getElementById('hc-new').textContent = hcLeads.length;
+      document.getElementById('hl-medicare').textContent = hlLeads.filter(l=>l.product&&l.product.toLowerCase().includes('medicare')).length;
+      document.getElementById('hl-life').textContent = hlLeads.filter(l=>l.product&&(l.product.toLowerCase().includes('life')||l.product.toLowerCase().includes('php'))).length;
+      document.getElementById('hl-aca').textContent = hlLeads.filter(l=>l.product&&(l.product.toLowerCase().includes('aca')||l.product.toLowerCase().includes('non-aca'))).length;
+    }
+
+    // ── DEMO DATA ──
+    function loadDemo(type) {
+      const hcDemo = [
+        {name:'Dr. Maria Lopez',practice:'Lopez Family Medicine',phone:'(305) 555-0101',email:'maria@lopezmed.com',service:'Medical Billing / RCM',city:'Miami, FL',status:'Active Client',notes:'98% clean claim rate',date:today()},
+        {name:'Dr. James Carter',practice:'Carter Orthopedics',phone:'(214) 555-0202',email:'jcarter@carterortho.com',service:'Credentialing',city:'Dallas, TX',status:'Proposal Sent',notes:'Needs 3 payer enrollments',date:today()},
+        {name:'Dr. Aisha Patel',practice:'Patel Internal Medicine',phone:'(404) 555-0303',email:'apatel@patelmed.com',service:'HIPAA Compliance',city:'Atlanta, GA',status:'New',notes:'Risk assessment needed',date:today()},
+      ];
+      const hlDemo = [
+        {name:'Robert Johnson',phone:'(305) 555-0401',email:'rjohnson@email.com',dob:'1955-04-12',state:'Florida',product:'Medicare Advantage',carrier:'Aetna',status:'Enrolled',notes:'Medicare + dental bundle',date:today()},
+        {name:'Susan Williams',phone:'(214) 555-0402',email:'swilliams@email.com',dob:'1988-07-23',state:'Texas',product:'ACA / Marketplace Plan',carrier:'Blue Cross Blue Shield',status:'Quoted',notes:'Family of 4, subsidy eligible',date:today()},
+        {name:'Michael Torres',phone:'(786) 555-0403',email:'mtorres@email.com',dob:'1972-11-05',state:'Florida',product:'Life Insurance — PHP / Aetna',carrier:'PHP Agency',status:'App Submitted',notes:'$500k term life, non-smoker',date:today()},
+      ];
+
+      if (type === 'hc' || type === 'full') {
+        document.getElementById('demo-table-title').textContent = 'Demo — Healthcare Consulting Leads';
+        document.getElementById('demo-thead').innerHTML = '<tr><th>Name</th><th>Practice</th><th>Service</th><th>Location</th><th>Status</th></tr>';
+        document.getElementById('demo-tbody').innerHTML = hcDemo.map(l=>`<tr><td style="font-weight:600;">${l.name}</td><td>${l.practice}</td><td>${l.service}</td><td>${l.city}</td><td>${statusBadge(l.status)}</td></tr>`).join('');
+        document.getElementById('demo-description').textContent = 'Healthcare demo loaded. Walk a client or team member through how leads are captured, tracked, and managed in the GCGO Healthcare Consulting division.';
+      }
+      if (type === 'hl') {
+        document.getElementById('demo-table-title').textContent = 'Demo — Health & Life Insurance Leads';
+        document.getElementById('demo-thead').innerHTML = '<tr><th>Name</th><th>Phone</th><th>Product</th><th>Carrier</th><th>Status</th></tr>';
+        document.getElementById('demo-tbody').innerHTML = hlDemo.map(l=>`<tr><td style="font-weight:600;">${l.name}</td><td>${l.phone}</td><td>${l.product}</td><td>${l.carrier}</td><td>${statusBadge(l.status)}</td></tr>`).join('');
+        document.getElementById('demo-description').textContent = 'Health & Life demo loaded. Show clients or agents how Medicare, ACA, life insurance, and dental/vision leads flow through the system.';
+      }
+      if (type === 'full') {
+        document.getElementById('demo-table-title').textContent = 'Demo — Full Platform (Both Divisions)';
+        const all = [...hcDemo.map(l=>({...l,division:'Healthcare',product:l.service})),...hlDemo.map(l=>({...l,division:'Health & Life',practice:'—'}))];
+        document.getElementById('demo-thead').innerHTML = '<tr><th>Name</th><th>Division</th><th>Product / Service</th><th>Carrier / Location</th><th>Status</th></tr>';
+        document.getElementById('demo-tbody').innerHTML = all.map(l=>`<tr><td style="font-weight:600;">${l.name}</td><td><span class="badge ${l.division==='Healthcare'?'badge-green':'badge-blue'}">${l.division}</span></td><td>${l.product||l.service}</td><td>${l.carrier||l.city||'—'}</td><td>${statusBadge(l.status)}</td></tr>`).join('');
+        document.getElementById('demo-description').textContent = 'Full platform demo loaded. Shows how both divisions — Healthcare Consulting and Health & Life — are tracked together in GoGo Mode.';
+      }
+      document.getElementById('demo-data-block').style.display = 'block';
+    }
+
+    function clearDemo() {
+      document.getElementById('demo-data-block').style.display = 'none';
+      document.getElementById('demo-description').textContent = 'Select a demo scenario above to load sample data and walk through the platform with a client or new team member.';
+    }
+  </script>
+</body>
+</html>
