@@ -5,391 +5,641 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GCGO Healthcare Consulting Services | Medical Billing, Credentialing & Revenue Cycle</title>
   <meta name="description" content="GCGO Healthcare Consulting Services — expert medical billing, credentialing, HIPAA compliance, virtual RNs, and revenue cycle management for private practices across the U.S." />
+  <meta name="keywords" content="healthcare consulting, medical billing, credentialing, revenue cycle management, HIPAA compliance, virtual RN, EMR implementation, DOT testing, McKinsey healthcare, Deloitte healthcare consulting, BCG healthcare, Guidehouse" />
   <link rel="canonical" href="https://gohealthcareco.com/" />
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"MedicalOrganization","name":"GCGO Healthcare Consulting Services","url":"https://gohealthcareco.com","email":"hello@gohealthcareco.com","areaServed":"United States"}</script>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@200;300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalOrganization",
+    "name": "GCGO Healthcare Consulting Services",
+    "alternateName": "Go Healthcare Consulting Services",
+    "url": "https://gohealthcareco.com",
+    "email": "hello@gohealthcareco.com",
+    "description": "Full-stack healthcare consulting for private practices — medical billing, credentialing, HIPAA compliance, virtual RNs, revenue cycle management, and lab & testing services.",
+    "areaServed": "United States",
+    "serviceType": ["Medical Billing", "Credentialing", "HIPAA Compliance", "Revenue Cycle Management", "Virtual RN", "EMR Implementation"]
+  }
+  </script>
+
   <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
     :root {
-      --bg:#020810; --bg2:#040f1e; --green:#00d68f; --teal:#00e5b0;
-      --gold:#ffc947; --white:#e8f4f8; --muted:#4a6475;
-      --border:rgba(0,214,143,0.12); --glow:0 0 28px rgba(0,214,143,0.2);
+      --teal:       #0D9B7A;
+      --teal-dark:  #0A7D63;
+      --teal-light: #E6F7F3;
+      --teal-mid:   #B2E8D8;
+      --black:      #0F1614;
+      --gray-900:   #1A2320;
+      --gray-700:   #3D4F4A;
+      --gray-500:   #6B7C78;
+      --gray-300:   #C4CFCC;
+      --gray-100:   #F0F4F3;
+      --white:      #FFFFFF;
+      --gold:       #D4A843;
+      --red:        #E05C5C;
+
+      --font-display: 'Georgia', 'Times New Roman', serif;
+      --font-body: system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+      --radius: 10px;
+      --shadow: 0 2px 16px rgba(0,0,0,0.07);
+      --shadow-md: 0 4px 28px rgba(0,0,0,0.11);
     }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--white);font-family:'Exo 2',sans-serif;font-weight:300;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,214,143,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,214,143,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
 
-    /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px 5%;background:rgba(2,8,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-    .logo{font-family:'Rajdhani',sans-serif;font-size:1.25rem;font-weight:700;color:var(--green);letter-spacing:0.08em;text-decoration:none}
-    .logo span{color:var(--white)}
-    .nav-right{display:flex;align-items:center;gap:16px}
-    .nav-hl{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--green);text-decoration:none;border:1px solid var(--green);padding:6px 14px;transition:background 0.2s,color 0.2s}
-    .nav-hl:hover{background:var(--green);color:var(--bg)}
-    .nav-cta{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--bg);background:var(--green);text-decoration:none;padding:7px 16px;transition:box-shadow 0.2s}
-    .nav-cta:hover{box-shadow:var(--glow)}
-    .nav-links{display:flex;gap:24px;list-style:none}
-    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
-    .nav-links a:hover{color:var(--green)}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* HERO */
-    .hero{min-height:90vh;display:flex;flex-direction:column;justify-content:center;padding:100px 5% 60px;position:relative;z-index:1}
-    .eyebrow{font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--green);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px}
-    .eyebrow::before{content:'';display:inline-block;width:28px;height:1px;background:var(--green)}
-    h1{font-family:'Rajdhani',sans-serif;font-size:clamp(2.4rem,6vw,4.8rem);font-weight:700;line-height:1.05;max-width:780px;margin-bottom:16px}
-    h1 .accent{color:var(--green)}
-    .hero-sub{font-size:1rem;color:rgba(232,244,248,0.65);max-width:520px;line-height:1.75;margin-bottom:32px}
-    .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
-    .btn-primary{background:var(--green);color:var(--bg);padding:13px 28px;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:box-shadow 0.2s}
-    .btn-primary:hover{box-shadow:var(--glow)}
-    .btn-outline{background:transparent;color:var(--white);padding:13px 28px;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.2);cursor:pointer;text-decoration:none;display:inline-block;transition:border-color 0.2s,color 0.2s}
-    .btn-outline:hover{border-color:var(--green);color:var(--green)}
-    .stats{display:flex;gap:40px;flex-wrap:wrap}
-    .stat-num{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;color:var(--green);line-height:1}
-    .stat-label{font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:3px}
+    html { scroll-behavior: smooth; }
 
-    /* TRUST */
-    .trust{position:relative;z-index:1;background:rgba(0,214,143,0.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:14px 5%;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
-    .trust-label{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;white-space:nowrap}
-    .trust-items{display:flex;gap:20px;flex-wrap:wrap}
-    .trust-item{font-size:0.78rem;color:rgba(232,244,248,0.55);display:flex;align-items:center;gap:5px}
-    .trust-item::before{content:'✓';color:var(--green);font-size:0.7rem}
-
-    /* SECTIONS */
-    section{position:relative;z-index:1}
-    .sec-label{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--green);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px}
-    .sec-title{font-family:'Rajdhani',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:700;line-height:1.1;margin-bottom:12px}
-    .sec-body{font-size:0.92rem;color:rgba(232,244,248,0.6);line-height:1.7;max-width:540px}
-
-    /* SERVICES — condensed pill grid */
-    .services{padding:80px 5%}
-    .services-inner{max-width:1100px;margin:0 auto}
-    .services-header{margin-bottom:36px}
-    .services-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px}
-    .pill{display:flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);padding:12px 18px;font-size:0.85rem;color:rgba(232,244,248,0.8);transition:border-color 0.2s,color 0.2s;cursor:default}
-    .pill:hover{border-color:var(--green);color:var(--white);box-shadow:0 0 16px rgba(0,214,143,0.12)}
-    .pill-icon{font-size:1rem}
-    .pill-name{font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.88rem;letter-spacing:0.04em}
-    .services-note{font-size:0.8rem;color:var(--muted);line-height:1.6;max-width:600px}
-
-    /* COMPARISON */
-    .comparison{padding:80px 5%;background:var(--bg2)}
-    .comparison-inner{max-width:1100px;margin:0 auto}
-    .comp-header{margin-bottom:36px}
-    .comp-wrap{overflow-x:auto}
-    .comp-table{width:100%;border-collapse:collapse;font-size:0.8rem;min-width:680px}
-    .comp-table th{padding:11px 14px;font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--border);text-align:center;white-space:nowrap}
-    .comp-table th:first-child,.comp-table td:first-child{text-align:left}
-    .comp-table th.hi{color:var(--green);border-bottom-color:var(--green)}
-    .comp-table td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(232,244,248,0.65);text-align:center}
-    .comp-table td.hi{color:var(--green);font-weight:600}
-    .comp-table tr:hover td{background:rgba(0,214,143,0.02)}
-
-    /* WHY */
-    .why{padding:80px 5%}
-    .why-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-    .why-points{display:flex;flex-direction:column;gap:24px}
-    .why-point{display:flex;gap:14px}
-    .why-num{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--green);padding-top:3px;white-space:nowrap}
-    .why-point-title{font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;margin-bottom:3px}
-    .why-point-desc{font-size:0.82rem;color:var(--muted);line-height:1.6}
-
-    /* LOCATIONS */
-    .locations{padding:60px 5%;background:var(--bg2)}
-    .locations-inner{max-width:1100px;margin:0 auto}
-    .cities{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
-    .city{background:var(--bg);border:1px solid var(--border);padding:10px 18px;font-family:'Rajdhani',sans-serif;font-size:0.88rem;font-weight:600;color:rgba(232,244,248,0.7);text-decoration:none;transition:border-color 0.2s,color 0.2s}
-    .city:hover{border-color:var(--green);color:var(--green)}
-
-    /* H&L BANNER */
-    .hl-banner{padding:60px 5%;background:linear-gradient(135deg,rgba(0,214,143,0.07) 0%,rgba(2,8,16,0) 70%);border-top:1px solid rgba(0,214,143,0.15);border-left:4px solid var(--green);position:relative;z-index:1}
-    .hl-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px}
-
-    /* CONTACT */
-    .contact{padding:80px 5%}
-    .contact-inner{max-width:640px;margin:0 auto;text-align:center}
-    .contact-inner .sec-body{margin:0 auto 32px;text-align:center}
-    .form{display:flex;flex-direction:column;gap:12px;text-align:left}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .fg{display:flex;flex-direction:column;gap:5px}
-    .fg label{font-family:'Share Tech Mono',monospace;font-size:0.58rem;color:var(--green);letter-spacing:0.12em;text-transform:uppercase}
-    .fg input,.fg select,.fg textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(0,214,143,0.15);color:var(--white);padding:10px 12px;font-family:'Exo 2',sans-serif;font-size:0.88rem;outline:none;transition:border-color 0.2s;width:100%}
-    .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green)}
-    .fg select{appearance:none}
-    .fg textarea{resize:vertical;min-height:80px}
-    .form-submit{background:var(--green);color:var(--bg);border:none;padding:14px;font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:box-shadow 0.2s;margin-top:4px}
-    .form-submit:hover{box-shadow:var(--glow)}
-    #form-success{display:none;background:rgba(0,214,143,0.1);border:1px solid var(--green);padding:18px;text-align:center;color:var(--green);font-family:'Rajdhani',sans-serif;font-size:1rem;margin-top:16px}
-
-    /* FOOTER */
-    footer{padding:40px 5% 28px;border-top:1px solid var(--border);position:relative;z-index:1}
-    .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:28px}
-    .footer-brand{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--green);margin-bottom:8px}
-    .footer-desc{font-size:0.78rem;color:var(--muted);line-height:1.65;max-width:300px}
-    .footer-col-title{font-family:'Rajdhani',sans-serif;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px}
-    .footer-links{display:flex;flex-direction:column;gap:8px}
-    .footer-links a{font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
-    .footer-links a:hover{color:var(--green)}
-    .footer-bottom{max-width:1100px;margin:0 auto;padding-top:20px;border-top:1px solid rgba(255,255,255,0.05);font-size:0.72rem;color:rgba(74,100,117,0.6)}
-
-    @media(max-width:768px){
-      .nav-links{display:none}
-      .why-inner{grid-template-columns:1fr;gap:36px}
-      .form-row{grid-template-columns:1fr}
-      .hl-inner{flex-direction:column}
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--gray-900);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
+
+    /* ── NAV ────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+    .nav-brand { display: flex; flex-direction: column; gap: 1px; text-decoration: none; }
+    .nav-brand-top { font-size: 18px; font-weight: 800; color: var(--teal); letter-spacing: 0.04em; }
+    .nav-brand-sub { font-size: 11px; color: var(--gray-500); letter-spacing: 0.06em; text-transform: uppercase; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .nav-btn-outline {
+      display: flex; align-items: center; gap: 6px;
+      border: 1.5px solid var(--teal);
+      color: var(--teal);
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 8px 14px;
+      font-size: 13px; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      transition: all 0.18s;
+    }
+    .nav-btn-outline:hover { background: var(--teal-light); }
+    .nav-btn-fill {
+      background: var(--teal);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      padding: 9px 16px;
+      font-size: 13px; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.18s;
+      letter-spacing: 0.02em;
+    }
+    .nav-btn-fill:hover { background: var(--teal-dark); }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--black) 0%, var(--gray-900) 60%, #0A2B22 100%);
+      color: var(--white);
+      padding: 72px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(13,155,122,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(13,155,122,0.2);
+      border: 1px solid rgba(13,155,122,0.4);
+      color: var(--teal);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 99px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 7vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      max-width: 700px;
+      margin-left: auto; margin-right: auto;
+    }
+    .hero h1 span { color: var(--teal); }
+    .hero-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.72);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--teal);
+      color: var(--white);
+      border: none; border-radius: var(--radius);
+      padding: 14px 28px;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.18s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--teal-dark); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.35);
+      border-radius: var(--radius);
+      padding: 14px 28px;
+      font-size: 15px; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: border-color 0.18s, background 0.18s;
+      display: inline-block;
+    }
+    .btn-secondary:hover { border-color: var(--teal); background: rgba(13,155,122,0.1); }
+
+    .hero-stats {
+      display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+      margin-top: 52px;
+      padding-top: 36px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat { text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 800; color: var(--teal); display: block; }
+    .stat-label { font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ── SECTION SHARED ─────────────────────────────────── */
+    section { padding: 72px 24px; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 5vw, 38px);
+      font-weight: 700; line-height: 1.2;
+      color: var(--black);
+      margin-bottom: 16px;
+    }
+    .section-body {
+      font-size: 16px; color: var(--gray-500);
+      max-width: 560px; line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    /* ── HEALTH & LIFE BANNER ───────────────────────────── */
+    .hl-banner {
+      background: linear-gradient(135deg, #0A2B22 0%, var(--gray-900) 100%);
+      border-top: 3px solid var(--teal);
+      padding: 40px 24px;
+    }
+    .hl-banner-inner {
+      max-width: 960px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .hl-banner-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 4vw, 28px);
+      color: var(--white); font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .hl-banner-text p { font-size: 14px; color: rgba(255,255,255,0.65); max-width: 460px; line-height: 1.6; }
+    .hl-banner .btn-primary { white-space: nowrap; flex-shrink: 0; }
+
+    /* ── SERVICES ───────────────────────────────────────── */
+    .services-section { background: var(--gray-100); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 8px;
+    }
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--gray-300);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: box-shadow 0.18s, border-color 0.18s;
+    }
+    .service-card:hover { box-shadow: var(--shadow-md); border-color: var(--teal-mid); }
+    .service-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+    .service-name { font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 8px; }
+    .service-desc { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
+
+    /* ── COMPARISON TABLE ───────────────────────────────── */
+    .compare-section { background: var(--white); }
+    .compare-wrap { overflow-x: auto; }
+    table.compare {
+      width: 100%; border-collapse: collapse;
+      font-size: 14px; min-width: 540px;
+    }
+    table.compare th {
+      background: var(--gray-100);
+      color: var(--gray-700);
+      font-weight: 700; font-size: 12px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 14px 16px; text-align: left;
+      border-bottom: 2px solid var(--gray-300);
+    }
+    table.compare th:first-child { border-radius: var(--radius) 0 0 0; }
+    table.compare th:last-child { border-radius: 0 var(--radius) 0 0; }
+    table.compare td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--gray-100);
+      color: var(--gray-700);
+      vertical-align: middle;
+    }
+    table.compare tr:last-child td { border-bottom: none; }
+    table.compare tr.gcgo-row td { background: var(--teal-light); font-weight: 600; color: var(--teal-dark); }
+    table.compare tr.gcgo-row td:first-child { border-left: 3px solid var(--teal); }
+    .check { color: var(--teal); font-weight: 700; }
+    .cross { color: var(--gray-300); }
+    .partial { color: var(--gold); }
+
+    /* ── LOCATIONS ──────────────────────────────────────── */
+    .locations-section { background: var(--gray-100); }
+    .cities-grid {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;
+    }
+    .city-tag {
+      background: var(--white);
+      border: 1px solid var(--gray-300);
+      border-radius: 99px;
+      padding: 8px 18px;
+      font-size: 13px; font-weight: 600; color: var(--gray-700);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .city-tag span { color: var(--teal); }
+
+    /* ── CONTACT FORM ───────────────────────────────────── */
+    .contact-section { background: var(--white); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 640px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    .contact-left h2 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 700; color: var(--black);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .contact-left p { font-size: 15px; color: var(--gray-500); line-height: 1.7; margin-bottom: 24px; }
+    .contact-perks { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .contact-perks li { font-size: 14px; color: var(--gray-700); display: flex; align-items: center; gap: 10px; }
+    .contact-perks li::before { content: '✓'; color: var(--teal); font-weight: 700; font-size: 15px; flex-shrink: 0; }
+
+    .form-card {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-300);
+      border-radius: 14px;
+      padding: 32px 28px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .field-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .field-group label { font-size: 12px; font-weight: 700; color: var(--gray-700); letter-spacing: 0.05em; text-transform: uppercase; }
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      background: var(--white);
+      border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 14px; color: var(--black);
+      font-family: var(--font-body);
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus { border-color: var(--teal); }
+    .field-group textarea { resize: vertical; min-height: 90px; }
+    .form-submit {
+      width: 100%;
+      background: var(--teal);
+      color: var(--white);
+      border: none; border-radius: var(--radius);
+      padding: 15px 0;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.18s;
+      margin-top: 6px;
+      display: block;
+    }
+    .form-submit:hover { background: var(--teal-dark); }
+    #form-success {
+      display: none;
+      background: var(--teal-light);
+      border: 1.5px solid var(--teal-mid);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      color: var(--teal-dark);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      color: rgba(255,255,255,0.55);
+      padding: 48px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 32px; margin-bottom: 36px;
+    }
+    @media (max-width: 640px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    .footer-brand-name { font-size: 16px; font-weight: 800; color: var(--teal); margin-bottom: 10px; }
+    .footer-brand-desc { font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.4); }
+    .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+    .footer-links { display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.15s; }
+    .footer-links a:hover { color: var(--teal); }
+    .footer-bottom {
+      max-width: 960px; margin: 0 auto;
+      padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
+    .footer-legal { font-size: 11px; color: rgba(255,255,255,0.22); line-height: 1.5; }
   </style>
 </head>
 <body>
 
-<nav>
-  <a href="/" class="logo">GCGO <span>Healthcare</span></a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#why">Why Us</a></li>
-    <li><a href="#locations">Locations</a></li>
-  </ul>
-  <div class="nav-right">
-    <a href="health-life.html" class="nav-hl">🛡️ Health &amp; Life</a>
-    <a href="#contact" class="nav-cta">Free Audit</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero"><div style="position:absolute;top:20%;left:30%;width:500px;height:500px;background:radial-gradient(circle,rgba(0,214,143,0.07) 0%,transparent 70%);pointer-events:none;z-index:0;"></div>
-  <div class="eyebrow">GCGO Healthcare Consulting Services</div>
-  <h1>Your Practice.<br/><span class="accent">Maximum Revenue.</span><br/>Zero Complexity.</h1>
-  <p class="hero-sub">Full-stack healthcare operations built exclusively for private practices — billing, compliance, credentialing, and clinical support under one roof.</p>
-  <div class="hero-actions">
-    <a href="#contact" class="btn-primary">Get a Free Audit</a>
-    <a href="#services" class="btn-outline">View Services</a>
-    <a href="health-life.html" class="btn-outline" style="border-color:rgba(0,214,143,0.4);color:var(--green);">🛡️ Health &amp; Life Insurance</a>
-  </div>
-  <div class="stats">
-    <div><div class="stat-num">98%</div><div class="stat-label">Clean Claim Rate</div></div>
-    <div><div class="stat-num">$2M+</div><div class="stat-label">Revenue Recovered</div></div>
-    <div><div class="stat-num">50+</div><div class="stat-label">Practices Served</div></div>
-    <div><div class="stat-num">10</div><div class="stat-label">Cities &amp; Growing</div></div>
-  </div>
-</section>
-
-<!-- TRUST -->
-<div class="trust">
-  <span class="trust-label">Certified &amp; Compliant</span>
-  <div class="trust-items">
-    <span class="trust-item">AAPC Certified</span>
-    <span class="trust-item">HIPAA Compliant</span>
-    <span class="trust-item">AHIMA Standards</span>
-    <span class="trust-item">SOC 2 Practices</span>
-    <span class="trust-item">WCAG 2.1 AA</span>
-    <span class="trust-item">Licensed Insurance Agent</span>
-  </div>
-</div>
-
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="services-inner">
-    <div class="services-header">
-      <div class="sec-label">What We Do</div>
-      <h2 class="sec-title">Everything Your Practice Needs.</h2>
-      <p class="sec-body">From revenue cycle to compliance to clinical support — one partner, no gaps.</p>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="/">
+      <span class="nav-brand-top">GCGO</span>
+      <span class="nav-brand-sub">Healthcare</span>
+    </a>
+    <div class="nav-actions">
+      <a class="nav-btn-outline" href="/health-life.html">🛡️ Health &amp; Life</a>
+      <a class="nav-btn-fill" href="#contact">Free Audit</a>
     </div>
-    <div class="services-pills">
-      <div class="pill"><span class="pill-icon">💊</span><span class="pill-name">Medical Billing &amp; RCM</span></div>
-      <div class="pill"><span class="pill-icon">🏥</span><span class="pill-name">Credentialing</span></div>
-      <div class="pill"><span class="pill-icon">🔐</span><span class="pill-name">HIPAA Compliance</span></div>
-      <div class="pill"><span class="pill-icon">👩‍⚕️</span><span class="pill-name">Virtual RN Services</span></div>
-      <div class="pill"><span class="pill-icon">💻</span><span class="pill-name">EMR Implementation</span></div>
-      <div class="pill"><span class="pill-icon">📡</span><span class="pill-name">Remote Patient Monitoring</span></div>
-      <div class="pill"><span class="pill-icon">🧪</span><span class="pill-name">Lab &amp; DOT Testing</span></div>
-      <div class="pill"><span class="pill-icon">🩺</span><span class="pill-name">Paramedical Exams</span></div>
-      <div class="pill"><span class="pill-icon">📋</span><span class="pill-name">Practice Management</span></div>
-    </div>
-    <p class="services-note">All services available virtually across all 50 states. Local support in 10 major markets. <a href="#contact" style="color:var(--green);text-decoration:none;">Request a service overview →</a></p>
-  </div>
-</section>
+  </nav>
 
-<!-- COMPARISON -->
-<section class="comparison" id="compare">
-  <div class="comparison-inner">
-    <div class="comp-header">
-      <div class="sec-label">Why We Win</div>
-      <h2 class="sec-title">Enterprise-Grade Operations.<br/>Private Practice Price.</h2>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Healthcare Operations Consulting</div>
+    <h1>Your Practice.<br/><span>Maximum Revenue.</span><br/>Zero Complexity.</h1>
+    <p class="hero-sub">Full-stack healthcare consulting for private practices — from medical billing and credentialing to HIPAA compliance, virtual RNs, and revenue cycle management.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#contact">Get a Free Audit →</a>
+      <a class="btn-secondary" href="#services">See What We Do</a>
     </div>
-    <div class="comp-wrap">
-      <table class="comp-table">
-        <thead>
-          <tr>
-            <th>Capability</th>
-            <th class="hi">GCGO Healthcare</th>
-            <th>Big Consulting</th>
-            <th>Typical Billing Co.</th>
-            <th>In-House Staff</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Medical Billing &amp; RCM</td><td class="hi">✓ End-to-End</td><td>✗ Not offered</td><td>✓ Basic</td><td>✓ Costly</td></tr>
-          <tr><td>Credentialing</td><td class="hi">✓ Full service</td><td>✗</td><td>Sometimes</td><td>✓ Slow</td></tr>
-          <tr><td>HIPAA Compliance</td><td class="hi">✓ Ongoing</td><td>✓ One-time audit</td><td>✗</td><td>Risky</td></tr>
-          <tr><td>Virtual RN / Clinical Ops</td><td class="hi">✓ Included</td><td>✗</td><td>✗</td><td>$80k+/yr</td></tr>
-          <tr><td>EMR Implementation</td><td class="hi">✓ All platforms</td><td>Enterprise only</td><td>✗</td><td>✗</td></tr>
-          <tr><td>Lab &amp; DOT Testing</td><td class="hi">✓ Quest + LabCorp</td><td>✗</td><td>✗</td><td>✗</td></tr>
-          <tr><td>Private Practice Focus</td><td class="hi">✓ Exclusive</td><td>✗ Enterprise</td><td>Partial</td><td>✓</td></tr>
-          <tr><td>Monthly Cost</td><td class="hi">Affordable</td><td>$200k–500k/project</td><td>8–12% of revenue</td><td>$150k+/yr</td></tr>
-        </tbody>
-      </table>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">98%</span><span class="stat-label">Clean Claim Rate</span></div>
+      <div class="stat"><span class="stat-num">🇺🇸</span><span class="stat-label">Nationwide Remote</span></div>
+      <div class="stat"><span class="stat-num">30+</span><span class="stat-label">Days Faster Payments</span></div>
+      <div class="stat"><span class="stat-num">100%</span><span class="stat-label">HIPAA Compliant</span></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- WHY -->
-<section class="why" id="why">
-  <div class="why-inner">
-    <div>
-      <div class="sec-label">Our Approach</div>
-      <h2 class="sec-title">Built for Private Practices.<br/>Not Boardrooms.</h2>
-      <p class="sec-body">Every system, process, and person at GCGO is calibrated for independent practice workflows — not retrofitted from hospital or enterprise consulting.</p>
-    </div>
-    <div class="why-points">
-      <div class="why-point"><span class="why-num">01 —</span><div><div class="why-point-title">Private Practice Specialists</div><p class="why-point-desc">We only serve independent practices. That focus means deeper expertise, faster results.</p></div></div>
-      <div class="why-point"><span class="why-num">02 —</span><div><div class="why-point-title">Full Stack, Single Partner</div><p class="why-point-desc">Billing, compliance, clinical, and technology under one roof. No vendor juggling.</p></div></div>
-      <div class="why-point"><span class="why-num">03 —</span><div><div class="why-point-title">Transparent Pricing</div><p class="why-point-desc">Flat-fee or percentage models. You know exactly what you pay and what you get.</p></div></div>
-      <div class="why-point"><span class="why-num">04 —</span><div><div class="why-point-title">Real-Time Visibility</div><p class="why-point-desc">Live claims tracking, compliance status, and direct messaging in your client portal.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- LOCATIONS -->
-<section class="locations" id="locations">
-  <div class="locations-inner">
-    <div class="sec-label">Service Area</div>
-    <h2 class="sec-title">Serving Private Practices Nationwide</h2>
-    <p class="sec-body">Local expertise in 10 major markets — virtual services available in all 50 states.</p>
-    <div class="cities">
-      <a href="#contact" class="city">Miami, FL</a>
-      <a href="#contact" class="city">Dallas, TX</a>
-      <a href="#contact" class="city">Atlanta, GA</a>
-      <a href="#contact" class="city">Chicago, IL</a>
-      <a href="#contact" class="city">New York, NY</a>
-      <a href="#contact" class="city">Los Angeles, CA</a>
-      <a href="#contact" class="city">Houston, TX</a>
-      <a href="#contact" class="city">Phoenix, AZ</a>
-      <a href="#contact" class="city">Seattle, WA</a>
-      <a href="#contact" class="city">Denver, CO</a>
-    </div>
-  </div>
-</section>
-
-<!-- H&L BANNER -->
-<section class="hl-banner">
-  <div class="hl-inner">
-    <div>
-      <div class="sec-label" style="color:var(--green);">GCGO Health &amp; Life Division</div>
-      <h2 class="sec-title" style="font-size:clamp(1.4rem,2.5vw,2rem);">Medicare. ACA. Life Insurance.<br/>Dental, Vision &amp; Hearing.</h2>
-      <p style="font-size:0.88rem;color:rgba(232,244,248,0.55);max-width:440px;line-height:1.7;margin-top:8px;">Licensed health &amp; life insurance agent — PHP Agency, Aetna, BCBS, Anthem, Kaiser, New Era Life, VSP &amp; more.</p>
-    </div>
-    <a href="health-life.html" class="btn-primary" style="white-space:nowrap;">Explore Health &amp; Life →</a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="contact-inner">
-    <div class="sec-label">Get Started</div>
-    <h2 class="sec-title">Free Revenue Cycle Audit</h2>
-    <p class="sec-body">Tell us about your practice and we'll show you exactly where you're leaving money on the table.</p>
-    <div class="form" id="contact-form">
-      <div class="form-row">
-        <div class="fg"><label>First Name</label><input type="text" id="cf-first" placeholder="Jane" /></div>
-        <div class="fg"><label>Last Name</label><input type="text" id="cf-last" placeholder="Smith" /></div>
+  <!-- HEALTH & LIFE BANNER -->
+  <div class="hl-banner">
+    <div class="hl-banner-inner">
+      <div class="hl-banner-text">
+        <h2>GCGO Health &amp; Life Division</h2>
+        <p>Medicare. ACA. Life Insurance. Dental, Vision &amp; Hearing. Licensed health &amp; life insurance agent — PHP Agency, Aetna, BCBS, Anthem, Kaiser, New Era Life, VSP &amp; more.</p>
       </div>
-      <div class="form-row">
-        <div class="fg"><label>Email</label><input type="email" id="cf-email" placeholder="jane@practice.com" /></div>
-        <div class="fg"><label>Phone</label><input type="tel" id="cf-phone" placeholder="(305) 555-0100" /></div>
-      </div>
-      <div class="fg"><label>Practice Name</label><input type="text" id="cf-practice" placeholder="Smith Family Medicine" /></div>
-      <div class="form-row"><div class="fg"><label>City / State</label><input type="text" id="cf-city" placeholder="Miami, FL" /></div><div class="fg"><label>Specialty</label><input type="text" id="cf-specialty" placeholder="Family Medicine, Ortho..." /></div></div>
-      <div class="fg"><label>Primary Interest</label>
-        <select id="cf-service">
-          <option value="">Select a service...</option>
-          <option>Medical Billing / RCM</option>
-          <option>Credentialing</option>
-          <option>HIPAA Compliance</option>
-          <option>Virtual RN Services</option>
-          <option>EMR Implementation</option>
-          <option>Remote Patient Monitoring</option>
-          <option>Lab / DOT Testing</option>
-          <option>Paramedical Exams</option>
-          <option>Full Practice Audit</option>
-        </select>
-      </div>
-      <div class="fg"><label>Tell Us About Your Practice</label><textarea id="cf-notes" placeholder="Specialty, number of providers, biggest challenge right now..."></textarea></div>
-      <button class="form-submit" onclick="submitForm()">Request Free Audit →</button>
+      <a class="btn-primary" href="/health-life.html">Explore Health &amp; Life →</a>
     </div>
-    <div id="form-success">✓ Request received! We'll reach out within 1 business day.</div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-brand">GCGO Healthcare Consulting</div>
-      <p class="footer-desc">Go Healthcare Consulting Services, LLC — full-stack healthcare operations for private practices across the United States.</p>
-    </div>
-    <div>
-      <div class="footer-col-title">Services</div>
-      <div class="footer-links">
-        <a href="#services">Medical Billing</a>
-        <a href="#services">Credentialing</a>
-        <a href="#services">HIPAA Compliance</a>
-        <a href="#services">Virtual RN</a>
-        <a href="#services">EMR Setup</a>
-        <a href="#services">RPM / Lab / DOT</a>
+  <!-- SERVICES -->
+  <section class="services-section" id="services">
+    <div class="section-inner">
+      <div class="section-eyebrow">What We Do</div>
+      <h2 class="section-title">Everything Your Practice Needs.<br/>One Partner.</h2>
+      <p class="section-body">We handle the operational complexity so your team can focus on patient care.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="service-icon">💰</span>
+          <div class="service-name">Medical Billing &amp; Revenue Cycle</div>
+          <div class="service-desc">End-to-end claims submission, denial management, and payment posting. We chase every dollar on your behalf.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">📋</span>
+          <div class="service-name">Credentialing</div>
+          <div class="service-desc">Provider enrollment and payer credentialing handled from start to finish — so you get paid faster.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🔒</span>
+          <div class="service-name">HIPAA Compliance</div>
+          <div class="service-desc">Risk assessments, policy implementation, staff training, and ongoing compliance monitoring.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">👩‍⚕️</span>
+          <div class="service-name">Virtual RN Services</div>
+          <div class="service-desc">Experienced registered nurses supporting your clinical operations remotely — care coordination, charting, triage support.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">💻</span>
+          <div class="service-name">EMR Implementation</div>
+          <div class="service-desc">Full setup, training, and optimization for your electronic medical records system.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">📡</span>
+          <div class="service-name">Remote Patient Monitoring</div>
+          <div class="service-desc">RPM program setup and management — generate new revenue streams while improving patient outcomes.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🧪</span>
+          <div class="service-name">Lab &amp; DOT Testing</div>
+          <div class="service-desc">Drug testing, DOT compliance programs, and lab services coordination for your practice or employer clients.</div>
+        </div>
+        <div class="service-card">
+          <span class="service-icon">🩺</span>
+          <div class="service-name">Paramedical Exams</div>
+          <div class="service-desc">Insurance exam services and health screenings managed and coordinated through your practice.</div>
+        </div>
       </div>
     </div>
-    <div>
-      <div class="footer-col-title">Company</div>
-      <div class="footer-links">
-        <a href="#why">About</a>
-        <a href="#locations">Locations</a>
-        <a href="health-life.html">Health &amp; Life</a>
-        <a href="#contact">Free Audit</a>
-        <a href="mailto:hello@gohealthcareco.com">hello@gohealthcareco.com</a>
-        <a href="mailto:hello@gohealthcareco.com">Email Us</a>
+  </section>
+
+
+
+
+
+  <!-- ONE STOP SHOP STRIP -->
+  <section style="background:var(--teal);padding:56px 24px;">
+    <div class="section-inner" style="text-align:center;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:14px;">One Partner. Every Need.</div>
+      <h2 style="font-family:var(--font-display);font-size:clamp(22px,5vw,36px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:18px;">Your One-Stop Shop for<br/>Healthcare Business Operations</h2>
+      <p style="font-size:16px;color:rgba(255,255,255,0.82);max-width:580px;margin:0 auto 32px;line-height:1.7;">Solo practice or multi-provider group — big or small, we scale with you. GCGO combines AI-powered tools with hands-on consulting so you can run a smarter, leaner, more profitable practice from anywhere in the United States.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px 24px;text-align:center;min-width:140px;">
+          <div style="font-size:22px;margin-bottom:6px;">🏥</div>
+          <div style="font-size:13px;font-weight:700;color:var(--white);">Any Practice Size</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px 24px;text-align:center;min-width:140px;">
+          <div style="font-size:22px;margin-bottom:6px;">🤖</div>
+          <div style="font-size:13px;font-weight:700;color:var(--white);">AI-Powered Tools</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px 24px;text-align:center;min-width:140px;">
+          <div style="font-size:22px;margin-bottom:6px;">🇺🇸</div>
+          <div style="font-size:13px;font-weight:700;color:var(--white);">Nationwide Remote</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.15);border-radius:10px;padding:16px 24px;text-align:center;min-width:140px;">
+          <div style="font-size:22px;margin-bottom:6px;">⚡</div>
+          <div style="font-size:13px;font-weight:700;color:var(--white);">Fast Onboarding</div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="footer-bottom">© 2026 Go Healthcare Consulting Services, LLC. All rights reserved. Independent consulting firm specializing in private medical practice operations.</div>
-</footer>
+  </section>
 
-<!-- MOBILE FLOATING CTA -->
-<div id="mobile-cta" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:200;width:calc(100% - 40px);max-width:360px;">
-  <a href="#contact" style="display:block;background:var(--green);color:var(--bg);text-align:center;padding:15px;font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;box-shadow:0 4px 24px rgba(0,214,143,0.35);">Get a Free Audit →</a>
-</div>
+  <!-- CONTACT FORM -->
+  <section class="contact-section" id="contact">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div class="contact-left">
+          <div class="section-eyebrow">Get Started</div>
+          <h2>Free Revenue Cycle Audit</h2>
+          <p>Tell us about your practice and we'll show you exactly where you're leaving money on the table — no obligation, no sales pressure.</p>
+          <ul class="contact-perks">
+            <li>Identify billing gaps and underpaid claims</li>
+            <li>Review your credentialing status</li>
+            <li>HIPAA risk snapshot</li>
+            <li>Custom revenue recovery estimate</li>
+            <li>Response within 1 business day</li>
+          </ul>
+        </div>
+        <div class="contact-right">
+          <div class="form-card" id="contact-form">
+            <div class="form-row">
+              <div class="field-group">
+                <label>First Name</label>
+                <input type="text" id="first-name" placeholder="Jane" />
+              </div>
+              <div class="field-group">
+                <label>Last Name</label>
+                <input type="text" id="last-name" placeholder="Smith" />
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Email</label>
+              <input type="email" id="email" placeholder="jane@mypractice.com" />
+            </div>
+            <div class="field-group">
+              <label>Phone</label>
+              <input type="tel" id="phone" placeholder="(305) 555-0100" />
+            </div>
+            <div class="field-group">
+              <label>Practice Name</label>
+              <input type="text" id="practice" placeholder="Smith Family Medicine" />
+            </div>
+            <div class="field-group">
+              <label>Primary Interest</label>
+              <select id="service">
+                <option value="">Select a service...</option>
+                <option>Medical Billing &amp; Revenue Cycle</option>
+                <option>Credentialing</option>
+                <option>HIPAA Compliance</option>
+                <option>Virtual RN Services</option>
+                <option>EMR Implementation</option>
+                <option>Remote Patient Monitoring</option>
+                <option>Lab &amp; Testing Services</option>
+                <option>Paramedical Exams</option>
+                <option>Full Practice Audit</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Tell Us About Your Practice</label>
+              <textarea id="message" placeholder="Specialty, number of providers, biggest challenge right now..."></textarea>
+            </div>
+            <button class="form-submit" onclick="submitForm()">Request Free Audit →</button>
+          </div>
+          <div id="form-success">
+            ✓ Request received! We'll reach out within 1 business day.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script>
-// Show mobile CTA after scrolling past hero
-function checkScroll(){
-  const cta = document.getElementById('mobile-cta');
-  if(window.innerWidth <= 768){
-    cta.style.display = window.scrollY > 400 ? 'block' : 'none';
-  } else {
-    cta.style.display = 'none';
-  }
-}
-window.addEventListener('scroll', checkScroll);
-window.addEventListener('resize', checkScroll);
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand-name">GCGO Healthcare Consulting</div>
+        <p class="footer-brand-desc">Go Healthcare Consulting Services, LLC — DBA GCGO Healthcare Consulting Services. Full-stack healthcare operations for private practices across the United States.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="#services">Medical Billing</a>
+          <a href="#services">Credentialing</a>
+          <a href="#services">HIPAA Compliance</a>
+          <a href="#services">Virtual RN</a>
+          <a href="#services">EMR Setup</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">More Services</div>
+        <div class="footer-links">
+          <a href="#services">RPM Programs</a>
+          <a href="#services">Lab Testing</a>
+          <a href="#services">DOT Testing</a>
+          <a href="#services">Paramedical Exams</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-links">
+          <a href="mailto:hello@gohealthcareco.com">hello@gohealthcareco.com</a>
+          <a href="#contact">Free Audit</a>
+          <a href="/health-life.html">Health &amp; Life</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Go Healthcare Consulting Services, LLC. All rights reserved.</span>
+      <span class="footer-legal">GCGO Healthcare Consulting Services is an independent consulting firm specializing in private medical practice operations across the United States.</span>
+    </div>
+  </footer>
 
-function submitForm(){
-  const first=document.getElementById('cf-first').value.trim();
-  const last=document.getElementById('cf-last').value.trim();
-  const email=document.getElementById('cf-email').value.trim();
-  const phone=document.getElementById('cf-phone').value.trim();
-  if(!first||!last||!email||!phone){alert('Please fill in your name, email, and phone.');return;}
-  document.getElementById('contact-form').style.display='none';
-  document.getElementById('form-success').style.display='block';
-}
-</script>
+  <script>
+    function submitForm() {
+      const first = document.getElementById('first-name').value.trim();
+      const last  = document.getElementById('last-name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!first || !last || !email || !phone) {
+        alert('Please fill in your name, email, and phone number.');
+        return;
+      }
+
+      // TODO: Connect to Supabase
+      // const SUPABASE_URL = 'https://ugororuwfpvumxolnttn.supabase.co';
+      // const SUPABASE_KEY = 'YOUR_ANON_KEY';
+
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    }
+  </script>
+
 </body>
 </html>
